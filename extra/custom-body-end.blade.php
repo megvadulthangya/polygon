@@ -1,8 +1,12 @@
+
 {{--
     Gshoots Polygon custom body-end enhancements.
 
-    Adds the NVIDIA-green SVG mark to the matching Heading block.
-    Required asset: extra/custom-assets/nvidia.svg
+    Replaces the [[NVIDIA]] marker in Heading blocks
+    with the NVIDIA-green SVG mark.
+
+    Required asset:
+    extra/custom-assets/nvidia.svg
 --}}
 
 <style>
@@ -20,37 +24,74 @@
 (function () {
     'use strict';
 
-    var targetHeading = 'NVIDIA Driver Maintenance & Legacy Support';
+    var markerPattern = /\[\[NVIDIA\]\]/gi;
     var iconUrl = "{{ themeAsset('nvidia.svg') }}";
 
-    function addNvidiaHeadingIcon() {
+    function replaceNvidiaMarkers(heading) {
+        var walker = document.createTreeWalker(
+            heading,
+            NodeFilter.SHOW_TEXT
+        );
+
+        var textNodes = [];
+
+        while (walker.nextNode()) {
+            textNodes.push(walker.currentNode);
+        }
+
+        textNodes.forEach(function (textNode) {
+            var content = textNode.nodeValue || '';
+
+            if (!/\[\[NVIDIA\]\]/i.test(content)) {
+                return;
+            }
+
+            var parts = content.split(markerPattern);
+            var fragment = document.createDocumentFragment();
+
+            parts.forEach(function (part, index) {
+                if (part) {
+                    fragment.appendChild(
+                        document.createTextNode(part)
+                    );
+                }
+
+                if (index < parts.length - 1) {
+                    var icon = document.createElement('img');
+
+                    icon.className = 'gshoots-nvidia-heading-icon';
+                    icon.src = iconUrl;
+                    icon.alt = '';
+                    icon.setAttribute('aria-hidden', 'true');
+                    icon.setAttribute('draggable', 'false');
+
+                    fragment.appendChild(icon);
+                }
+            });
+
+            if (textNode.parentNode) {
+                textNode.parentNode.replaceChild(
+                    fragment,
+                    textNode
+                );
+            }
+        });
+    }
+
+    function addNvidiaHeadingIcons() {
         document.querySelectorAll('h2').forEach(function (heading) {
-            var headingText = (heading.textContent || '').replace(/\s+/g, ' ').trim();
-
-            if (headingText !== targetHeading) {
-                return;
-            }
-
-            // Prevent duplicate insertion if this function is called again.
-            if (heading.querySelector('.gshoots-nvidia-heading-icon')) {
-                return;
-            }
-
-            var icon = document.createElement('img');
-            icon.className = 'gshoots-nvidia-heading-icon';
-            icon.src = iconUrl;
-            icon.alt = '';
-            icon.setAttribute('aria-hidden', 'true');
-            icon.setAttribute('draggable', 'false');
-
-            heading.insertBefore(icon, heading.firstChild);
+            replaceNvidiaMarkers(heading);
         });
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', addNvidiaHeadingIcon, { once: true });
+        document.addEventListener(
+            'DOMContentLoaded',
+            addNvidiaHeadingIcons,
+            { once: true }
+        );
     } else {
-        addNvidiaHeadingIcon();
+        addNvidiaHeadingIcons();
     }
 })();
 </script>
