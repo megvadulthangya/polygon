@@ -2,6 +2,12 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
+  // Ellenőrizzük, hogy a tsParticles és a loadSlim elérhető-e
+  if (typeof tsParticles === "undefined" || typeof loadSlim === "undefined") {
+    console.error("tsParticles vagy loadSlim nem található. Ellenőrizd a slim bundle betöltését.");
+    return;
+  }
+
   if (tsParticles.dom().some(c => c.id === "tsparticles")) {
     return;
   }
