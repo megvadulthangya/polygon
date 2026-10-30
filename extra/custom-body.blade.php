@@ -8,12 +8,23 @@
     "detectsOn": "canvas",
     "events": {
       "onClick": {
-        "enable": false
+        "enable": true,
+        "mode": "push"
       },
       "onHover": {
-        "enable": false
+        "enable": true,
+        "mode": "repulse"
       },
       "resize": true
+    },
+    "modes": {
+      "push": {
+        "particles_nb": 4
+      },
+      "repulse": {
+        "distance": 200,
+        "duration": 0.4
+      }
     }
   },
   "particles": {
@@ -33,14 +44,15 @@
       "enable": true,
       "outMode": "out",
       "random": false,
-      "speed": 1,
+      "speed": 2,
       "straight": false
     },
     "number": {
       "density": {
-        "enable": false
+        "enable": true,
+        "area": 800
       },
-      "value": 40
+      "value": 80
     },
     "opacity": {
       "value": 0.5
@@ -50,7 +62,7 @@
     },
     "size": {
       "random": true,
-      "value": 4
+      "value": 5
     }
   }
 }'></web-particles>
