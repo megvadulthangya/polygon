@@ -1,8 +1,6 @@
-<!-- tsParticles container -->
-<script src="{{themeAsset('tsparticles.min.js')}}"></script>
-<script src="{{themeAsset('custom-elements-es5-adapter.js')}}"></script>
-<script src="{{themeAsset('webcomponents-loader.js')}}"></script>
-<script type="module" src="{{themeAsset('web-particles.min.js')}}"></script>
+<!-- tsParticles v4.4.0 engine + slim bundle (pinned, locally hosted) -->
+<script src="{{ themeAsset('tsparticles.engine.min.js') }}"></script>
+<script src="{{ themeAsset('tsparticles.slim.bundle.min.js') }}"></script>
 
 <style>
 canvas {
@@ -18,5 +16,4 @@ canvas {
   background-size: cover;
   background-position: 50% 50%;
 }
-
 </style>
