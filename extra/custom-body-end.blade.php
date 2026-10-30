@@ -27,7 +27,7 @@
     }
 
     var options = {
-      fpsLimit: 30,
+      fpsLimit: 60,
       detectRetina: false,
       pauseOnBlur: true,
       pauseOnOutsideViewport: true,
