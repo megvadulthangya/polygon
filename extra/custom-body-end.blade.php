@@ -89,7 +89,7 @@
             enable: true,
             area: 800
           },
-          value: 80
+          value: 100
         },
         opacity: {
           value: 0.5
