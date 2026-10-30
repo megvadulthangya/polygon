@@ -1,4 +1,7 @@
-<!-- tsParticles v4.4.0 slim bundle (pinned, locally hosted) -->
+<!-- tsParticles v4.4.0 engine -->
+<script src="{{ themeAsset('tsparticles.engine.min.js') }}"></script>
+
+<!-- tsParticles v4.4.0 slim bundle -->
 <script src="{{ themeAsset('tsparticles.slim.bundle.min.js') }}"></script>
 
 <style>
@@ -6,7 +9,7 @@ canvas {
   display: block;
   vertical-align: bottom;
 }
-/* ---- tsparticles container ---- */
+
 #tsparticles {
   position: absolute;
   width: 100%;

@@ -1,22 +1,32 @@
 <style> /* This is a comment */ </style>
 
 <script>
-document.addEventListener("DOMContentLoaded", async () => {
-  // Ellenőrizzük, hogy a tsParticles és a loadSlim elérhető-e
-  if (typeof tsParticles === "undefined" || typeof loadSlim === "undefined") {
-    console.error("tsParticles vagy loadSlim nem található. Ellenőrizd a slim bundle betöltését.");
-    return;
-  }
+(function () {
+  "use strict";
 
-  if (tsParticles.dom().some(c => c.id === "tsparticles")) {
-    return;
-  }
+  function initParticles() {
+    if (!window.tsParticles) {
+      console.error("tsParticles engine is not loaded.");
+      return;
+    }
 
-  await loadSlim(tsParticles);
+    if (typeof window.loadSlim !== "function") {
+      console.error("tsParticles slim bundle (loadSlim) is not loaded.");
+      return;
+    }
 
-  await tsParticles.load({
-    id: "tsparticles",
-    options: {
+    if (typeof window.tsParticles.items !== "undefined" && window.tsParticles.items.length > 0) {
+      console.log("tsParticles already initialized.");
+      return;
+    }
+
+    var container = document.getElementById("tsparticles");
+    if (!container) {
+      console.error("#tsparticles container not found.");
+      return;
+    }
+
+    var options = {
       fpsLimit: 30,
       detectRetina: false,
       pauseOnBlur: true,
@@ -25,20 +35,36 @@ document.addEventListener("DOMContentLoaded", async () => {
       interactivity: {
         detectsOn: "canvas",
         events: {
-          onClick: { enable: true, mode: "push" },
-          onHover: { enable: true, mode: "repulse" },
-          resize: true
+          onClick: {
+            enable: true,
+            mode: "push"
+          },
+          onHover: {
+            enable: true,
+            mode: "repulse"
+          }
         },
         modes: {
-          push: { quantity: 4 },
-          repulse: { distance: 200, duration: 0.4 }
+          push: {
+            quantity: 4
+          },
+          repulse: {
+            distance: 200,
+            duration: 0.4
+          }
         }
       },
 
       particles: {
         paint: {
+          color: {
+            value: "#ffffff"
+          },
           fill: {
-            color: { value: "#ffffff" }
+            enable: true,
+            color: {
+              value: "#ffffff"
+            }
           }
         },
         links: {
@@ -49,24 +75,64 @@ document.addEventListener("DOMContentLoaded", async () => {
           width: 1
         },
         move: {
-          direction: "none",
           enable: true,
-          outModes: { default: "out" },
+          direction: "none",
+          outModes: {
+            default: "out"
+          },
           random: false,
           speed: 2,
           straight: false
         },
         number: {
-          density: { enable: true, area: 800 },
+          density: {
+            enable: true,
+            area: 800
+          },
           value: 80
         },
-        opacity: { value: 0.5 },
-        shape: { type: "circle" },
-        size: { value: { min: 1, max: 5 } }
+        opacity: {
+          value: 0.5
+        },
+        shape: {
+          type: "circle"
+        },
+        size: {
+          value: {
+            min: 1,
+            max: 5
+          }
+        }
       }
-    }
-  });
-});
+    };
+
+    window
+      .loadSlim(window.tsParticles)
+      .then(function () {
+        return window.tsParticles.load({
+          id: "tsparticles",
+          options: options
+        });
+      })
+      .then(function (container) {
+        console.log(
+          "tsParticles initialized. Version: " +
+            window.tsParticles.version +
+            ", particles: " +
+            (container && container.particles ? container.particles.count : "unknown")
+        );
+      })
+      .catch(function (error) {
+        console.error("tsParticles initialization failed:", error);
+      });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initParticles);
+  } else {
+    initParticles();
+  }
+})();
 </script>
 
 {{-- This is a comment --}}
