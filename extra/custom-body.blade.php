@@ -1,27 +1,19 @@
 
 <web-particles id="tsparticles" options='{
-  "fps_limit": 60,
+  "fps_limit": 24,
+  "detectRetina": false,
+  "pauseOnBlur": true,
+  "pauseOnOutsideViewport": true,
   "interactivity": {
     "detectsOn": "canvas",
     "events": {
       "onClick": {
-        "enable": true,
-        "mode": "push"
+        "enable": false
       },
       "onHover": {
-        "enable": true,
-        "mode": "repulse"
+        "enable": false
       },
       "resize": true
-    },
-    "modes": {
-      "push": {
-        "particles_nb": 4
-      },
-      "repulse": {
-        "distance": 200,
-        "duration": 0.4
-      }
     }
   },
   "particles": {
@@ -30,9 +22,9 @@
     },
     "links": {
       "color": "#ffffff",
-      "distance": 150,
+      "distance": 110,
       "enable": true,
-      "opacity": 0.4,
+      "opacity": 0.3,
       "width": 1
     },
     "move": {
@@ -41,64 +33,24 @@
       "enable": true,
       "outMode": "out",
       "random": false,
-      "speed": 2,
+      "speed": 0.7,
       "straight": false
     },
     "number": {
       "density": {
-        "enable": true,
-        "area": 800
+        "enable": false
       },
-      "value": 80
+      "value": 18
     },
     "opacity": {
-      "value": 0.5
+      "value": 0.45
     },
     "shape": {
       "type": "circle"
     },
     "size": {
       "random": true,
-      "value": 5
+      "value": 3
     }
-  },
-  "detectRetina": true,
-  "responsive": [
-    {
-      "maxWidth": 768,
-      "options": {
-        "fps_limit": 30,
-        "detectRetina": false,
-        "interactivity": {
-          "events": {
-            "onClick": {
-              "enable": false
-            },
-            "onHover": {
-              "enable": false
-            }
-          }
-        },
-        "particles": {
-          "links": {
-            "distance": 105,
-            "opacity": 0.3
-          },
-          "move": {
-            "speed": 1
-          },
-          "number": {
-            "density": {
-              "enable": false
-            },
-            "value": 30
-          },
-          "size": {
-            "random": true,
-            "value": 4
-          }
-        }
-      }
-    }
-  ]
+  }
 }'></web-particles>
