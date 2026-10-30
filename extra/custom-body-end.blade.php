@@ -69,7 +69,7 @@
         },
         links: {
           color: "#ffffff",
-          distance: 200,
+          distance: 150,
           enable: true,
           opacity: 0.4,
           width: 1
@@ -89,7 +89,7 @@
             enable: true,
             area: 800
           },
-          value: 140
+          value: 160
         },
         opacity: {
           value: 0.5
