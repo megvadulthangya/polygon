@@ -1,6 +1,6 @@
 
 <web-particles id="tsparticles" options='{
-  "fps_limit": 24,
+  "fps_limit": 30,
   "detectRetina": false,
   "pauseOnBlur": true,
   "pauseOnOutsideViewport": true,
@@ -22,9 +22,9 @@
     },
     "links": {
       "color": "#ffffff",
-      "distance": 110,
+      "distance": 150,
       "enable": true,
-      "opacity": 0.3,
+      "opacity": 0.4,
       "width": 1
     },
     "move": {
@@ -33,24 +33,24 @@
       "enable": true,
       "outMode": "out",
       "random": false,
-      "speed": 0.7,
+      "speed": 1,
       "straight": false
     },
     "number": {
       "density": {
         "enable": false
       },
-      "value": 18
+      "value": 40
     },
     "opacity": {
-      "value": 0.45
+      "value": 0.5
     },
     "shape": {
       "type": "circle"
     },
     "size": {
       "random": true,
-      "value": 3
+      "value": 4
     }
   }
 }'></web-particles>
