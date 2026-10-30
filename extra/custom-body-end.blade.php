@@ -2,8 +2,10 @@
 {{--
     Gshoots Polygon custom body-end enhancements.
 
-    Replaces the [[NVIDIA]] marker in Heading blocks
+    Replaces [[NVIDIA]] markers in visible page text
     with the NVIDIA-green SVG mark.
+
+    Works in headings, paragraphs, lists and text blocks.
 
     Required asset:
     extra/custom-assets/nvidia.svg
@@ -12,11 +14,11 @@
 <style>
     .gshoots-nvidia-heading-icon {
         display: inline-block;
-        width: 1.3em;
-        height: 1.3em;
-        margin-right: 0.45em;
+        width: 1.15em;
+        height: 1.15em;
+        margin: 0 0.18em;
         object-fit: contain;
-        vertical-align: -0.24em;
+        vertical-align: -0.2em;
     }
 </style>
 
@@ -24,29 +26,65 @@
 (function () {
     'use strict';
 
-    var markerPattern = /\[\[NVIDIA\]\]/gi;
+    var markerTest = /\[\[NVIDIA\]\]/i;
+    var markerSplit = /\[\[NVIDIA\]\]/gi;
     var iconUrl = "{{ themeAsset('nvidia.svg') }}";
 
-    function replaceNvidiaMarkers(heading) {
+    var excludedTags = [
+        'SCRIPT',
+        'STYLE',
+        'NOSCRIPT',
+        'TEXTAREA',
+        'INPUT',
+        'SELECT',
+        'OPTION',
+        'CODE',
+        'PRE',
+        'TEMPLATE'
+    ];
+
+    function isEligibleTextNode(node) {
+        var parent = node.parentElement;
+
+        while (parent && parent !== document.body) {
+            if (excludedTags.indexOf(parent.tagName) !== -1) {
+                return false;
+            }
+
+            parent = parent.parentElement;
+        }
+
+        return parent === document.body;
+    }
+
+    function replaceMarkers(root) {
         var walker = document.createTreeWalker(
-            heading,
+            root,
             NodeFilter.SHOW_TEXT
         );
 
         var textNodes = [];
 
         while (walker.nextNode()) {
-            textNodes.push(walker.currentNode);
+            var node = walker.currentNode;
+            var content = node.nodeValue || '';
+
+            if (
+                markerTest.test(content) &&
+                isEligibleTextNode(node)
+            ) {
+                textNodes.push(node);
+            }
         }
 
         textNodes.forEach(function (textNode) {
             var content = textNode.nodeValue || '';
 
-            if (!/\[\[NVIDIA\]\]/i.test(content)) {
+            if (!markerTest.test(content)) {
                 return;
             }
 
-            var parts = content.split(markerPattern);
+            var parts = content.split(markerSplit);
             var fragment = document.createDocumentFragment();
 
             parts.forEach(function (part, index) {
@@ -78,20 +116,20 @@
         });
     }
 
-    function addNvidiaHeadingIcons() {
-        document.querySelectorAll('h2').forEach(function (heading) {
-            replaceNvidiaMarkers(heading);
-        });
+    function initialize() {
+        if (document.body) {
+            replaceMarkers(document.body);
+        }
     }
 
     if (document.readyState === 'loading') {
         document.addEventListener(
             'DOMContentLoaded',
-            addNvidiaHeadingIcons,
+            initialize,
             { once: true }
         );
     } else {
-        addNvidiaHeadingIcons();
+        initialize();
     }
 })();
 </script>
