@@ -1,7 +1,4 @@
-<!-- tsParticles v4.4.0 engine -->
-<script src="{{ themeAsset('tsparticles.engine.min.js') }}"></script>
-
-<!-- tsParticles v4.4.0 slim bundle -->
+<!-- tsParticles v4.4.0 slim bundle (includes its own engine) -->
 <script src="{{ themeAsset('tsparticles.slim.bundle.min.js') }}"></script>
 
 <style>
